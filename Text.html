@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forbidden Ritual</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:black;
+  color:#e8e2d6;
+  font-family:'Cinzel', serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* fundo sombrio */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,#1a0000,black 70%);
+  z-index:-2;
+}
+
+/* névoa */
+.fog{
+  position:absolute;
+  inset:0;
+  background:url('https://i.imgur.com/4NJl3aX.png');
+  opacity:0.07;
+  animation:move 60s linear infinite;
+  z-index:-1;
+}
+
+@keyframes move{
+  0%{transform:translate(0,0);}
+  50%{transform:translate(-10%,-10%);}
+  100%{transform:translate(0,0);}
+}
+
+.container{
+  text-align:center;
+  max-width:800px;
+  padding:20px;
+}
+
+.text{
+  font-size:1.6rem;
+  margin-bottom:30px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:2s;
+}
+
+.text.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* botões */
+.buttons{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  margin-top:20px;
+}
+
+button{
+  background:transparent;
+  border:1px solid #b30000;
+  color:#e8e2d6;
+  padding:12px 20px;
+  cursor:pointer;
+  font-family:'Cinzel', serif;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#b30000;
+  color:black;
+}
+
+/* efeito final */
+.glow{
+  color:#ffcccc;
+  text-shadow:0 0 15px rgba(255,0,0,0.4);
+}
+</style>
+</head>
+
+<body>
+
+<div class="fog"></div>
+
+<div class="container">
+  <div id="text" class="text show">
+    You have entered the ritual...  
+    Do you wish to proceed?
+  </div>
+
+  <div class="buttons" id="buttons">
+    <button onclick="choice('proceed')">Proceed</button>
+    <button onclick="choice('leave')">Leave</button>
+  </div>
+</div>
+
+<script>
+
+const text = document.getElementById("text");
+const buttons = document.getElementById("buttons");
+
+function choice(option){
+
+  if(option === "proceed"){
+
+    text.innerHTML = "You accepted the ritual...<br><br>She is protected. Nothing can touch what is hers.";
+    text.classList.add("show","glow");
+
+    buttons.innerHTML = `
+      <button onclick="finalChoice('devotion')">Devotion</button>
+      <button onclick="finalChoice('fear')">Fear</button>
+    `;
+
+  }
+
+  if(option === "leave"){
+    text.innerHTML = "You tried to leave...<br><br>But the ritual remembers you.";
+    text.classList.add("glow");
+
+    buttons.innerHTML = `<button onclick="location.reload()">Return</button>`;
+  }
+}
+
+function finalChoice(option){
+
+  if(option === "devotion"){
+    text.innerHTML = "You chose devotion.<br><br>You are now part of the protection.";
+    text.classList.add("glow");
+    buttons.innerHTML = "";
+  }
+
+  if(option === "fear"){
+    text.innerHTML = "You chose fear.<br><br>Now you understand what should not be approached.";
+    text.classList.add("glow");
+    buttons.innerHTML = "";
+  }
+}
+
+</script>
+
+</body>
+</html>
+
+/* CONTAINER */
+.container{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+.line{
+  opacity:0;
+  transform:translateY(10px);
+  transition:3s ease;
+  font-size:1.7rem;
+  margin:18px 0;
+  letter-spacing:1px;
+  color:#f5e9dc;
+  text-shadow:0 0 10px rgba(255,80,80,0.1);
+}
+
+.line.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.glitch{
+  position:relative;
+}
+
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+  overflow:hidden;
+  color:#ff0000;
+  clip:rect(0,900px,0,0);
+}
+
+.glitch::before{
+  animation:glitchTop 2s infinite linear alternate-reverse;
+}
+
+.glitch::after{
+  animation:glitchBottom 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitchTop{
+  0%{clip:rect(0,9999px,0,0);}
+  50%{clip:rect(0,9999px,50px,0); transform:translate(-2px,-2px);}
+  100%{clip:rect(0,9999px,0,0);}
+}
+
+@keyframes glitchBottom{
+  0%{clip:rect(0,9999px,0,0);}
+  50%{clip:rect(50px,9999px,999px,0); transform:translate(2px,2px);}
+  100%{clip:rect(0,9999px,0,0);}
+}
+
+</style>
+</head>
+<body>
+
+<div id="preloader">ENTERING THE RITUAL...</div>
+<div class="fog"></div>
+
+<audio id="audio" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_7c7a2b8c3d.mp3?filename=dark-ambience-ambient-121349.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <div class="line glitch" data-text="You are not welcome here.">You are not welcome here.</div>
+  <div class="line" data-text="He is her Greek God — only hers.">He is her Greek God — only hers.</div>
+  <div class="line" data-text="She walks under divine protection.">She walks under divine protection.</div>
+  <div class="line" data-text="No harm reaches what belongs to him.">No harm reaches what belongs to him.</div>
+  <div class="line" data-text="Stay away… or be forgotten.">Stay away… or be forgotten.</div>
+</div>
+
+<script>
+const lines = document.querySelectorAll('.line');
+const audio = document.getElementById('audio');
+
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById('preloader').style.display = 'none';
+    audio.volume = 0.3;
+    audio.play().catch(()=>{});
+
+    let delay = 2500;
+
+    lines.forEach((line, i) => {
+      setTimeout(() => {
+        line.classList.add('show');
+      }, delay * (i + 1));
+    });
+
+  }, 2500);
+};
+</script>
+
+</body>
+</html>
